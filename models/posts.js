@@ -12,7 +12,6 @@ const PostSchema = new Schema(
         },
         imageURL: {
             type: String,
-            lowercase: true,
             trim: true,
             required: true
         },
