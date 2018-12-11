@@ -1,7 +1,7 @@
 import http from './http';
 // import { API_URL } from '../config.js';
 
-const API_ENDPOINT = `/profiles`;
+const API_ENDPOINT = `/api/profiles`;
 
 // Get profile by username
 const getByUsername = async username => {
