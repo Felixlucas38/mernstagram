@@ -10,13 +10,6 @@ const passport = require('passport');
 const Joi = require('joi');
 const Fawn = require('fawn');
 
-console.log('NODE_ENV', process.env.NODE_ENV);
-console.log('SECRET_OR_KEY', process.env.SECRET_OR_KEY);
-console.log('MONGO_URI', process.env.MONGO_URI);
-
-console.log('config jwtPrivateKey', config.get('jwtPrivateKey'));
-console.log('config db', config.get('db'));
-
 // --- Add Object ID validation to Joi
 Joi.objectId = require('joi-objectid')(Joi);
 
