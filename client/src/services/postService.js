@@ -1,7 +1,7 @@
 import http from './http';
-import { API_URL } from '../config.js';
+// import { API_URL } from '../config.js';
 
-const API_ENDPOINT = `${API_URL}/posts`;
+const API_ENDPOINT = `/posts`;
 
 // Get posts
 const getAll = async params => {

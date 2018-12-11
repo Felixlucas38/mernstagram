@@ -1,8 +1,8 @@
 import http from './http';
 import jwtDecode from 'jwt-decode';
-import { API_URL } from '../config.js';
+// import { API_URL } from '../config.js';
 
-const API_ENDPOINT = `${API_URL}/users`;
+const API_ENDPOINT = `/users`;
 
 // Login
 const login = async userData => {
