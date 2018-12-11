@@ -15,6 +15,7 @@
     "react-scripts": "2.1.1",
     "react-toastify": "^4.4.3",
     "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.7",
     "redux-form": "^7.4.2",
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.1.2"
@@ -34,7 +35,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "devDependencies": {
-    "redux-devtools-extension": "^2.13.7"
-  }
+  "devDependencies": {}
 }
