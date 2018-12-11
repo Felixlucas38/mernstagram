@@ -1,0 +1,4 @@
+{
+    "jwtPrivateKey": "SECRET_OR_KEY",
+    "db": "MONGO_URI"
+}

@@ -1,0 +1,89 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const config = require('config');
+const cors = require('cors');
+const helmet = require('helmet');
+const errorhandler = require('errorhandler');
+const passport = require('passport');
+const Joi = require('joi');
+const Fawn = require('fawn');
+
+console.log('NODE_ENV', process.env.NODE_ENV);
+console.log('SECRET_OR_KEY', process.env.SECRET_OR_KEY);
+console.log('MONGO_URI', process.env.MONGO_URI);
+
+console.log('config jwtPrivateKey', config.get('jwtPrivateKey'));
+console.log('config db', config.get('db'));
+
+// --- Add Object ID validation to Joi
+Joi.objectId = require('joi-objectid')(Joi);
+
+// --- Check if jwtPrivateKey is defined
+if (!config.get('jwtPrivateKey')) {
+    throw new Error('FATAL ERROR: jwtPrivateKey is not defined.');
+}
+
+// --- Monkey patch route handlers at runtime
+require('express-async-errors');
+
+const isProduction = process.env.NODE_ENV === 'production';
+const app = express();
+
+// --- Startup configuration
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(require('morgan')('tiny'));
+app.use(helmet());
+app.use(cors());
+if (!isProduction) app.use(errorhandler());
+
+app.use(passport.initialize());
+require('./startup/passport')(passport);
+
+// --- Connect to DB
+mongoose
+    .connect(
+        config.get('db'),
+        { useNewUrlParser: true }
+    )
+    .then(() => console.log('Connected to DB...'))
+    .catch(err => console.log('Unable to connect to DB'));
+// --- Enable logging collection methods + arguments to the console
+// mongoose.set('debug', true);
+Fawn.init(mongoose);
+
+// --- Routes
+app.use(require('./routes'));
+
+// --- Error Handlers
+if (!isProduction) {
+    // Development - print stacktrace
+    app.use((err, req, res, next) => {
+        console.log(err.stack);
+
+        res.status(err.status || 500);
+
+        res.json({
+            errors: {
+                message: err.message,
+                error: err
+            }
+        });
+    });
+}
+// Production - no stacktrace
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+
+    res.json({
+        errors: {
+            message: err.message,
+            error: {}
+        }
+    });
+});
+
+// --- Start server
+const port = process.env.PORT || 5000;
+app.listen(port, () => console.log(`Server running on port ${port}...`));

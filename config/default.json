@@ -1,0 +1,4 @@
+{
+    "jwtPrivateKey": "mernstagramSecretKey",
+    "db": "mongodb://localhost/mernstagram_dev"
+}
