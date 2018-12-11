@@ -1,6 +1,6 @@
 import http from './http';
 import jwtDecode from 'jwt-decode';
-import { API_URL } from '../config.json';
+import { API_URL } from '../config.js';
 
 const API_ENDPOINT = `${API_URL}/users`;
 

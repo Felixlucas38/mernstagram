@@ -1,5 +1,5 @@
 import http from './http';
-import { API_URL } from '../config.json';
+import { API_URL } from '../config.js';
 
 const API_ENDPOINT = `${API_URL}/posts`;
 
@@ -51,7 +51,9 @@ const createPost = async postData => {
 
 // Update post
 const updatePost = async (postId, postData) => {
-    const {data: { post } } = await http.put(`${API_ENDPOINT}/${postId}`, postData);
+    const {
+        data: { post }
+    } = await http.put(`${API_ENDPOINT}/${postId}`, postData);
     return post;
 };
 
