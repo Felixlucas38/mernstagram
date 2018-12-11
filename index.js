@@ -27,7 +27,6 @@ const app = express();
 // --- Startup configuration
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(require('morgan')('tiny'));
 app.use(helmet());
 app.use(cors());
 if (!isProduction) app.use(errorhandler());
@@ -58,8 +57,10 @@ if (isProduction) {
     });
 }
 
-// --- Error Handlers
 if (!isProduction) {
+    app.use(require('morgan')('tiny'));
+
+    // --- Error Handlers
     // Development - print stacktrace
     app.use((err, req, res, next) => {
         console.log(err.stack);
